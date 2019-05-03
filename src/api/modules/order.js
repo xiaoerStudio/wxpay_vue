@@ -24,14 +24,6 @@ export function info (id) {
   })
 }
 
-// 添加杂志配置
-export function add (params) {
-  return request({
-    url: requestUrl('/api/v1/journal/save'),
-    method: 'post',
-    data: requestParam(params)
-  })
-}
 
 // 修改采集站点配置
 export function update (params) {
@@ -45,7 +37,7 @@ export function update (params) {
 // 删除采集站点配置
 export function del (params) {
   return request({
-    url: requestUrl('/api/v1/journal/delete'),
+    url: requestUrl('/api/v1/journal_order/delete'),
     method: 'post',
     data: requestParam(params, 'post', false)
   })

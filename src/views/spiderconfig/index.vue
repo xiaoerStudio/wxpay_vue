@@ -30,14 +30,15 @@
       <el-table-column align="center" label="是否上线">
       	<template slot-scope="scope">
           <el-tag v-if="scope.row.online === 0" size="small" type="danger">预售</el-tag>
-          <el-tag v-else size="small">上线</el-tag>
+          <el-tag v-else size="small">在售</el-tag>
         </template>
       </el-table-column>
-      <el-table-column fixed="right" width="320" label="操作">
+      <el-table-column fixed="right" width="400" label="操作">
         <template slot-scope="scope">
           <el-button size="small" icon="el-icon-edit" @click="addOrUpdateHandle(scope.row.id)">编辑</el-button>
           <el-button size="small" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">删除</el-button>
           <el-button size="small" width="100" :type="scope.row.online ? 'success' : ''" @click="audite(scope.row.id)">{{scope.row.online ? '取消上线' : '审核上线'}}</el-button>
+           <el-button size="small" icon="el-icon-edit" :disabled="(!scope.row.online)" @click="subscribeHandle(scope.row.id)">订阅</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -52,6 +53,7 @@
     </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <add-or-update v-if="addOrUpdateVisible" ref="addOrUpdate" @refreshDataList="getDataList"></add-or-update>
+    <subscribe v-if="subscribeVisible" ref="subscribe" @refreshDataList="getDataList"></subscribe>
   </div>
 </template>
 
@@ -59,6 +61,7 @@
 import API from '@/api';
 import { mapMutations } from 'vuex';
 import AddOrUpdate from './add-or-update';
+import Subscribe from './subscribe';
 export default {
 	data() {
 		return {
@@ -72,10 +75,12 @@ export default {
 			dataListLoading: false,
 			dataListSelections: [],
 			addOrUpdateVisible: false,
+			subscribeVisible: false,
 		};
 	},
 	components: {
-		AddOrUpdate
+		AddOrUpdate,
+		Subscribe
 	},
 	activated() {
 		this.getDataList();
@@ -120,6 +125,13 @@ export default {
 			this.addOrUpdateVisible = true;
 			this.$nextTick(() => {
 				this.$refs.addOrUpdate.init(id);
+			});
+		},
+		// 订阅
+		subscribeHandle(id) {
+			this.subscribeVisible = true;
+			this.$nextTick(() => {
+				this.$refs.subscribe.init(id);
 			});
 		},
 		audite(id){

@@ -14,7 +14,7 @@
       <el-form-item>
         <el-button icon="el-icon-search" @click="getDataList()">搜索</el-button>
         <!-- <el-button type="primary" @click="addOrUpdateHandle()">新增</el-button> -->
-        <!-- <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button> -->
+        <el-button type="danger" @click="deleteHandle()" :disabled="dataListSelections.length <= 0">批量删除</el-button>
       </el-form-item>
     </el-form>
     <el-table :data="dataList" v-loading="dataListLoading" @selection-change="selectionChangeHandle" stripe border style="width: 100%;">
@@ -33,11 +33,17 @@
       	</template>
       </el-table-column>
       <el-table-column prop="createTime" align="center" width="180" label="订单生成时间"></el-table-column>
-      <el-table-column prop="userName" align="center" width="180" label="用户名称"></el-table-column>
-      <el-table-column fixed="right" width="100" label="操作">
+      <el-table-column align="center" label="支付情况">
+      	<template slot-scope="scope">
+          <el-tag v-if="scope.row.state === 1" size="small" type="danger">支付</el-tag>
+          <el-tag v-else size="small">未支付</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column prop="userName" align="center" width="90" label="用户名称"></el-table-column>
+      <el-table-column fixed="right" width="200" label="操作">
         <template slot-scope="scope">
           <el-button size="small" icon="el-icon-edit" @click="addOrUpdateHandle(scope.row.id)">详情</el-button>
-          <!-- <el-button size="small" icon="el-icon-delete" @click="deleteHandle(scope.row.id)">删除</el-button> -->
+          <el-button size="small" icon="el-icon-delete" :disabled="(scope.row.state)" @click="deleteHandle(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -94,6 +100,7 @@ export default {
 			API.order.list(params).then(({ data }) => {
 				if (data && data.code === 0) {
 					this.dataList = data.list.list;
+					console.log("dataList:",this.dataList)
 					this.totalPage = data.list.totalCount;
 				} else {
 					this.dataList = [];
@@ -140,7 +147,7 @@ export default {
 					type: 'warning'
 				}
 			).then(() => {
-				API.magazine.del(ids).then(({ data }) => {
+				API.order.del(ids).then(({ data }) => {
 					if (data && data.code === 0) {
 						this.$message({
 							message: '操作成功',

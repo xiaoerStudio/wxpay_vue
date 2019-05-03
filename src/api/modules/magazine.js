@@ -33,7 +33,7 @@ export function add (params) {
   })
 }
 
-// 修改采集站点配置
+// 修改杂志信息配置
 export function update (params) {
   return request({
     url: requestUrl('/api/v1/journal/update'),
@@ -42,7 +42,7 @@ export function update (params) {
   })
 }
 
-// 删除采集站点配置
+// 删除杂志信息配置
 export function del (params) {
   return request({
     url: requestUrl('/api/v1/journal/delete'),
@@ -60,6 +60,7 @@ export function toExamine (id) {
   })
 }
 
+// 照片上传
 export function upload (file) {
   return request({
     url: requestUrl('/api/common/save_file'),
@@ -68,57 +69,21 @@ export function upload (file) {
   })
 }
 
-// ====================== 采集结果页面 =====================
-// 获取采集结果
-export function getResult (params) {
+
+// 添加杂志配置
+export function wxadd (id) {
   return request({
-    url: requestUrl('/api/resultInfo/list'),
+    url: requestUrl('/api/v1/journal_order/wxadd'),
     method: 'get',
-    params: requestParam(params, 'get', false)
+    params: requestParam(id,'get',false)
   })
 }
-
-export function getConviersion (params) {
+// 添加杂志配置
+export function loadImg (id) {
   return request({
-    url: requestUrl('/api/resultInfo/challenge'),
+    url: requestUrl('/api/v1/journal_order/wxadd'),
     method: 'get',
-    params: requestParam(params, 'get', false)
-  })
-}
-
-// 获取采集结果的比对列表数据
-export function comparison (params) {
-  return request({
-    url: requestUrl('/sys/spiderconfig/comparison'),
-    method: 'get',
-    params: requestParam(params, 'get')
-  })
-}
-
-// 获取所有模板数据，用来比对
-export function getAllTemplate () {
-  return request({
-    url: requestUrl('/api/resultInfo/is_model'),
-    method: 'get',
-    params: requestParam({}, 'get', false)
-  })
-}
-
-
-// 获取当前的采集结果，用来比对结果
-export function getCurrentDataList (params) {
-  return request({
-    url: requestUrl('/api/resultInfo/comparison'),
-    method: 'post',
-    data: requestParam(params, 'post', false)
-  })
-}
-
-// 获取已选择的模板数据，用来比对结果
-export function getChooseDataList (params) {
-  return request({
-    url: requestUrl('/api/resultInfo/comparison'),
-    method: 'post',
-    data: requestParam(params, 'post', false)
+    params: requestParam(id,'get',false),
+    responseType: 'blob'
   })
 }

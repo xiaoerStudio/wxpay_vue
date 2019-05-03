@@ -3,11 +3,11 @@
     <div class="site-content__wrapper">
       <div class="site-content">
         <div class="brand-info">
-          <h2 class="brand-info__text">spider-vue</h2>
-          <p class="brand-info__intro">spider-vue基于vue、element-ui构建开发，实现spider-data管理页面。</p>
+          <h2 class="brand-info__text">杂志期刊订阅系统</h2>
+          <p class="brand-info__intro">spider-vue基于vue、element-ui构建开发，实现杂志期刊订阅系统页面。</p>
         </div>
         <div class="login-main">
-          <h3 class="login-title">管理员登录</h3>
+          <h3 class="login-title">用户登录</h3>
           <el-form :model="dataForm" :rules="dataRule" ref="dataForm" @keyup.enter.native="dataFormSubmit()" status-icon>
             <el-form-item prop="userName">
               <el-input v-model="dataForm.userName" placeholder="帐号"></el-input>

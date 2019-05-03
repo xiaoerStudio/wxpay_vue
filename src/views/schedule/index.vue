@@ -24,8 +24,8 @@
       <el-table-column type="selection" header-align="center" align="center" width="50"></el-table-column>
       <el-table-column prop="jobId" header-align="center" align="center" width="50" label="ID"></el-table-column>
       <el-table-column width="80" prop="beanName" label="任务名称"></el-table-column>
-      <el-table-column width="250" prop="paramsName" align="center" label="任务具体名称"></el-table-column>
-      <!-- <el-table-column prop="methodName" label="方法名称"></el-table-column> -->
+      <!-- <el-table-column width="250" prop="paramsName" align="center" label="任务具体名称"></el-table-column> -->
+      <el-table-column prop="methodName" label="方法名称"></el-table-column>
       <el-table-column prop="createTime" label="任务时间"></el-table-column>
       <el-table-column width="110" prop="cronExpression" label="cron表达式"></el-table-column>
       <el-table-column width="130" prop="remark" label="任务描述"></el-table-column>
@@ -113,7 +113,7 @@ export default {
 			API.schedule.list(params).then(({ data }) => {
 				if (data && data.code === 0) {
 					console.log('data',data);
-					this.dataList = data.list;
+					this.dataList = data.page.list;
 					this.totalPage = data.page.totalCount;
 				} else {
 					this.dataList = [];
